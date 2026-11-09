@@ -14,13 +14,6 @@
 
 /* postbox 自带白底、#c3c4c7 边框与 .hndle 标题栏，这里不再复写 */
 
-.sticky-order-lane__count {
-	margin-right: 8px;
-	color: #50575e;
-	font-size: 13px;
-	font-weight: 400;
-}
-
 .sticky-order-list {
 	margin: 0;
 	padding: 0;

@@ -159,9 +159,6 @@ class Sticky_Order_Admin {
 					<div class="postbox sticky-order-lane">
 						<div class="postbox-header">
 							<h2 class="hndle"><?php echo esc_html( $label ); ?></h2>
-							<div class="handle-actions">
-								<span class="sticky-order-lane__count"><?php echo esc_html( sprintf( '(%d)', count( $ids ) ) ); ?></span>
-							</div>
 						</div>
 
 						<div class="inside">
