@@ -152,21 +152,15 @@ class Sticky_Order_Admin {
 				<?php wp_nonce_field( 'sticky_order_save' ); ?>
 
 				<?php foreach ( $groups as $slug => $label ) : ?>
-					<?php
-					$slug = (string) $slug;
-					$ids  = isset( $queues[ $slug ] ) ? $queues[ $slug ] : array();
-					$term = $data['single'] ? null : get_term_by( 'slug', $slug, sticky_order_group_taxonomy() );
-					?>
+				<?php
+				$slug = (string) $slug;
+				$ids  = isset( $queues[ $slug ] ) ? $queues[ $slug ] : array();
+				?>
 					<div class="postbox sticky-order-lane">
 						<div class="postbox-header">
 							<h2 class="hndle"><?php echo esc_html( $label ); ?></h2>
 							<div class="handle-actions">
 								<span class="sticky-order-lane__count"><?php echo esc_html( sprintf( '(%d)', count( $ids ) ) ); ?></span>
-								<?php if ( $term instanceof WP_Term ) : ?>
-									<a class="sticky-order-lane__link" href="<?php echo esc_url( (string) get_term_link( $term ) ); ?>">
-										<?php echo esc_html( sprintf( $labels['view_all'], $term->name ) ); ?>
-									</a>
-								<?php endif; ?>
 							</div>
 						</div>
 

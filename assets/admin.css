@@ -17,13 +17,8 @@
 .sticky-order-lane__count {
 	margin-right: 8px;
 	color: #50575e;
+	font-size: 13px;
 	font-weight: 400;
-}
-
-.sticky-order-lane__link {
-	font-size: 12px;
-	line-height: 20px;
-	text-decoration: none;
 }
 
 .sticky-order-list {
@@ -37,9 +32,9 @@
 .sticky-order-item {
 	display: flex;
 	align-items: center;
-	gap: 12px;
+	gap: 10px;
 	margin: 0;
-	padding: 8px 12px;
+	padding: 8px 10px;
 	border-bottom: 1px solid #f0f0f1;
 }
 
@@ -119,10 +114,11 @@ a.sticky-order-item__title:hover {
 	color: #135e96;
 }
 
+/* 日期与原生列表的日期列一致：13px、#50575e */
 .sticky-order-item__meta {
 	flex: 0 0 auto;
-	color: #787c82;
-	font-size: 12px;
+	color: #50575e;
+	font-size: 13px;
 }
 
 /* 原生 sortable 的虚线占位框 */
