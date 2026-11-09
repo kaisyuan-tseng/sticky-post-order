@@ -1,72 +1,62 @@
-/* 置顶排序 —— 后台页样式（只在本页加载，类名全部带 sticky-order 前缀） */
+/* 置顶排序 —— 后台页样式（只在本页加载，类名全部带 sticky-order 前缀）
+ * 观感跟随 wp-admin 原生：面板用 postbox，列表用 widefat 式分隔线 + 斑马纹，
+ * 颜色、链接、占位框都取核心后台的既有值，不引入圆角卡片。 */
 
 .sticky-order__intro {
 	max-width: 760px;
-	color: #50575e;
+	color: #646970;
 }
 
 .sticky-order-lane {
 	max-width: 760px;
-	margin: 28px 0 0;
-	padding: 16px 18px 6px;
-	background: #fff;
-	border: 1px solid #dcdcde;
-	border-radius: 6px;
+	margin: 16px 0 0;
 }
 
-.sticky-order-lane__head {
-	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
-	gap: 12px;
-	margin-bottom: 8px;
-}
-
-.sticky-order-lane__title {
-	margin: 0;
-	font-size: 14px;
-}
+/* postbox 自带白底、#c3c4c7 边框与 .hndle 标题栏，这里不再复写 */
 
 .sticky-order-lane__count {
-	display: inline-block;
-	min-width: 20px;
-	margin-left: 6px;
-	padding: 0 6px;
+	margin-right: 8px;
 	color: #50575e;
-	background: #f0f0f1;
-	border-radius: 9px;
-	font-size: 11px;
 	font-weight: 400;
-	text-align: center;
 }
 
 .sticky-order-lane__link {
 	font-size: 12px;
+	line-height: 20px;
 	text-decoration: none;
-}
-
-.sticky-order-lane__empty,
-.sticky-order-lane__hint {
-	margin: 4px 0 12px;
-	color: #787c82;
-	font-size: 12px;
 }
 
 .sticky-order-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	background: #fff;
+	border: 1px solid #c3c4c7;
 }
 
 .sticky-order-item {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	margin: 0 0 6px;
-	padding: 8px 10px;
+	margin: 0;
+	padding: 8px 12px;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.sticky-order-item:last-child {
+	border-bottom: 0;
+}
+
+/* widefat striped 的斑马纹 */
+.sticky-order-item:nth-child(odd) {
 	background: #f6f7f7;
-	border: 1px solid #e2e4e7;
-	border-radius: 4px;
+}
+
+/* 拖拽中的行：白底描边，像原生表格行被提起 */
+.sticky-order .ui-sortable-helper {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgba( 0, 0, 0, 0.04 );
 }
 
 .sticky-order-item__grip {
@@ -74,12 +64,15 @@
 	cursor: move;
 }
 
+.sticky-order-item__grip:hover {
+	color: #2271b1;
+}
+
 .sticky-order-item__thumb {
 	flex: 0 0 60px;
 	height: 34px;
 	overflow: hidden;
-	background: #e2e4e7;
-	border-radius: 2px;
+	background: #f0f0f1;
 }
 
 .sticky-order-item__thumb img {
@@ -106,48 +99,49 @@
 	min-width: 0;
 }
 
+/* 行标题用原生列表的链接色与常规字重，不额外加粗 */
 .sticky-order-item__title {
 	flex: 1;
 	min-width: 0;
 	overflow: hidden;
 	color: #1d2327;
 	font-size: 13px;
-	font-weight: 600;
 	text-decoration: none;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-a.sticky-order-item__title:hover {
+a.sticky-order-item__title {
 	color: #2271b1;
+}
+
+a.sticky-order-item__title:hover {
+	color: #135e96;
 }
 
 .sticky-order-item__meta {
 	flex: 0 0 auto;
 	color: #787c82;
 	font-size: 12px;
-	font-variant-numeric: tabular-nums;
 }
 
+/* 原生 sortable 的虚线占位框 */
 .sticky-order-list__placeholder {
 	height: 50px;
-	margin-bottom: 6px;
-	background: #f0f6fc;
-	border: 1px dashed #2271b1;
-	border-radius: 4px;
+	background: #f6f7f7;
+	border: 1px dashed #c3c4c7;
 }
 
-.sticky-order .ui-sortable-helper {
-	box-shadow: 0 2px 8px rgba( 0, 0, 0, 0.15 );
+.sticky-order-lane__empty {
+	margin: 4px 0;
+	color: #646970;
 }
 
 .sticky-order-orphans {
 	max-width: 760px;
-	margin: 20px 0 0;
+	margin: 16px 0 0;
 }
 
 .sticky-order__summary {
 	margin-left: 10px;
-	color: #787c82;
-	font-size: 12px;
 }

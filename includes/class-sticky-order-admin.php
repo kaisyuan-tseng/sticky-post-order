@@ -137,14 +137,15 @@ class Sticky_Order_Admin {
 		$sticky_count = count( (array) get_option( 'sticky_posts', array() ) );
 		?>
 		<div class="wrap sticky-order">
-			<h1><?php echo esc_html( $labels['page_title'] ); ?></h1>
+			<h1 class="wp-heading-inline"><?php echo esc_html( $labels['page_title'] ); ?></h1>
+			<hr class="wp-header-end">
 
 			<?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 只读提示位。 ?>
 			<?php if ( isset( $_GET['updated'] ) ) : ?>
 				<div class="notice notice-success is-dismissible"><p><?php echo esc_html( $labels['saved'] ); ?></p></div>
 			<?php endif; ?>
 
-			<p class="sticky-order__intro"><?php echo wp_kses_post( $labels['intro'] ); ?></p>
+			<p class="description sticky-order__intro"><?php echo wp_kses_post( $labels['intro'] ); ?></p>
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="sticky_order_save">
@@ -156,34 +157,36 @@ class Sticky_Order_Admin {
 					$ids  = isset( $queues[ $slug ] ) ? $queues[ $slug ] : array();
 					$term = $data['single'] ? null : get_term_by( 'slug', $slug, sticky_order_group_taxonomy() );
 					?>
-					<section class="sticky-order-lane">
-						<header class="sticky-order-lane__head">
-							<h2 class="sticky-order-lane__title">
-								<?php echo esc_html( $label ); ?>
-								<span class="sticky-order-lane__count"><?php echo esc_html( (string) count( $ids ) ); ?></span>
-							</h2>
-							<?php if ( $term instanceof WP_Term ) : ?>
-								<a class="sticky-order-lane__link" href="<?php echo esc_url( (string) get_term_link( $term ) ); ?>">
-									<?php echo esc_html( sprintf( $labels['view_all'], $term->name ) ); ?>
-								</a>
-							<?php endif; ?>
-						</header>
+					<div class="postbox sticky-order-lane">
+						<div class="postbox-header">
+							<h2 class="hndle"><?php echo esc_html( $label ); ?></h2>
+							<div class="handle-actions">
+								<span class="sticky-order-lane__count"><?php echo esc_html( sprintf( '(%d)', count( $ids ) ) ); ?></span>
+								<?php if ( $term instanceof WP_Term ) : ?>
+									<a class="sticky-order-lane__link" href="<?php echo esc_url( (string) get_term_link( $term ) ); ?>">
+										<?php echo esc_html( sprintf( $labels['view_all'], $term->name ) ); ?>
+									</a>
+								<?php endif; ?>
+							</div>
+						</div>
 
-						<?php if ( ! $ids ) : ?>
-							<p class="sticky-order-lane__empty"><?php echo wp_kses_post( $labels['empty_group'] ); ?></p>
-						<?php else : ?>
-							<ul class="sticky-order-list" data-group="<?php echo esc_attr( $slug ); ?>">
-								<?php
-								foreach ( $ids as $id ) {
-									if ( isset( $by_id[ $id ] ) ) {
-										self::item( $id, $slug, $by_id[ $id ], $labels );
+						<div class="inside">
+							<?php if ( ! $ids ) : ?>
+								<p class="sticky-order-lane__empty"><?php echo wp_kses_post( $labels['empty_group'] ); ?></p>
+							<?php else : ?>
+								<ul class="sticky-order-list" data-group="<?php echo esc_attr( $slug ); ?>">
+									<?php
+									foreach ( $ids as $id ) {
+										if ( isset( $by_id[ $id ] ) ) {
+											self::item( $id, $slug, $by_id[ $id ], $labels );
+										}
 									}
-								}
-								?>
-							</ul>
-							<p class="sticky-order-lane__hint"><?php echo esc_html( $labels['drag_hint'] ); ?></p>
-						<?php endif; ?>
-					</section>
+									?>
+								</ul>
+								<p class="description sticky-order-lane__hint"><?php echo esc_html( $labels['drag_hint'] ); ?></p>
+							<?php endif; ?>
+						</div>
+					</div>
 				<?php endforeach; ?>
 
 				<?php if ( $orphans ) : ?>
@@ -207,7 +210,7 @@ class Sticky_Order_Admin {
 
 				<p class="submit">
 					<button type="submit" class="button button-primary"><?php echo esc_html( $labels['save'] ); ?></button>
-					<span class="sticky-order__summary">
+					<span class="description sticky-order__summary">
 						<?php echo esc_html( sprintf( $labels['summary'], $sticky_count, $total ) ); ?>
 					</span>
 				</p>
