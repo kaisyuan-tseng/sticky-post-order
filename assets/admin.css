@@ -12,11 +12,11 @@
 	margin: 16px 0 0;
 }
 
-/* 面板标题不参与拖拽（拖拽在每行的手柄上），不沿用核心的 move 指针；
+/* 面板标题不参与拖拽（拖拽在每行的手柄上）：指针用文本光标，贴合标题文字的身份；
    padding 对齐仪表盘 postbox 的 12px 16px */
 .sticky-order .postbox-header .hndle {
 	padding: 12px 16px;
-	cursor: default;
+	cursor: text;
 }
 
 .sticky-order-list {
