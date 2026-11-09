@@ -128,13 +128,7 @@ class Sticky_Order_Admin {
 
 		$groups = $data['single'] ? array( 'default' => $labels['single_title'] ) : sticky_order_groups();
 
-		$total = 0;
-		foreach ( $queues as $ids ) {
-			$total += count( $ids );
-		}
-
-		$orphans      = Sticky_Order_Queue::orphans();
-		$sticky_count = count( (array) get_option( 'sticky_posts', array() ) );
+		$orphans = Sticky_Order_Queue::orphans();
 		?>
 		<div class="wrap sticky-order">
 			<h1 class="wp-heading-inline"><?php echo esc_html( $labels['page_title'] ); ?></h1>
@@ -201,9 +195,6 @@ class Sticky_Order_Admin {
 
 				<p class="submit">
 					<button type="submit" class="button button-primary"><?php echo esc_html( $labels['save'] ); ?></button>
-					<span class="description sticky-order__summary">
-						<?php echo esc_html( sprintf( $labels['summary'], $sticky_count, $total ) ); ?>
-					</span>
 				</p>
 			</form>
 		</div>
