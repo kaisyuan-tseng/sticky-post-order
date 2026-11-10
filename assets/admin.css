@@ -119,6 +119,7 @@ a.sticky-order-item__title:hover {
 }
 
 /* 日期与原生列表的日期列一致：13px、#50575e */
+.sticky-order-item__author,
 .sticky-order-item__meta {
 	flex: 0 0 auto;
 	color: #50575e;

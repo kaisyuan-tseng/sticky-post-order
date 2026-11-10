@@ -85,11 +85,12 @@ class Sticky_Order_Admin {
 		exit;
 	}
 
-	/** 一行：手柄 + 缩略图 + 标题 + 日期 */
+	/** 一行：手柄 + 缩略图 + 标题 + 作者 + 日期 */
 	private static function item( $id, $group, $post, $labels ) {
-		$thumb = get_the_post_thumbnail_url( $id, 'thumbnail' );
+		$thumb  = get_the_post_thumbnail_url( $id, 'thumbnail' );
 		$edit   = get_edit_post_link( $id );
 		$date   = get_the_date( (string) get_option( 'date_format' ), $post );
+		$author = get_the_author_meta( 'display_name', (int) $post->post_author );
 		?>
 		<li class="sticky-order-item" data-id="<?php echo esc_attr( (string) $id ); ?>">
 			<input type="hidden" name="sticky_order[<?php echo esc_attr( (string) $group ); ?>][]" value="<?php echo esc_attr( (string) $id ); ?>">
@@ -108,6 +109,9 @@ class Sticky_Order_Admin {
 					</a>
 				<?php else : ?>
 					<span class="sticky-order-item__title"><?php echo esc_html( get_the_title( $id ) ); ?></span>
+				<?php endif; ?>
+				<?php if ( $author ) : ?>
+					<span class="sticky-order-item__author"><?php echo esc_html( $author ); ?></span>
 				<?php endif; ?>
 				<span class="sticky-order-item__meta"><?php echo esc_html( $date ); ?></span>
 			</span>
