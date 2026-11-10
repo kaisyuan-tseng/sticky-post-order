@@ -112,6 +112,7 @@ class Sticky_Order_Admin {
 				<?php endif; ?>
 				<?php if ( $author ) : ?>
 					<span class="sticky-order-item__author"><?php echo esc_html( $author ); ?></span>
+					<span class="sticky-order-item__sep" aria-hidden="true">·</span>
 				<?php endif; ?>
 				<span class="sticky-order-item__meta"><?php echo esc_html( $date ); ?></span>
 			</span>

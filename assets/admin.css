@@ -126,6 +126,12 @@ a.sticky-order-item__title:hover {
 	font-size: 13px;
 }
 
+.sticky-order-item__sep {
+	flex: 0 0 auto;
+	color: #c3c4c7;
+	font-size: 13px;
+}
+
 /* 原生 sortable 的虚线占位框 */
 .sticky-order-list__placeholder {
 	height: 50px;
