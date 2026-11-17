@@ -9,3 +9,6 @@ Thumbs.db
 # Local packaging artifacts
 *.zip
 *.log
+
+# Local-only audit notes (not part of the distributable plugin)
+AUDIT.md
