@@ -4,23 +4,34 @@
  *
  * 提交顺序 = DOM 顺序：每个 li 里带一个同名 hidden，拖拽只移动 li，
  * 所以不需要把顺序序列化成 JSON，也不需要额外的前端状态。
+ *
+ * @package StickyOrder
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Admin settings page controller.
+ */
 class Sticky_Order_Admin {
 
-	/** 本页的 hook suffix，用于只在本页加载资源 */
+	/**
+	 * 本页的 hook suffix，用于只在本页加载资源。
+	 *
+	 * @var string
+	 */
 	private static $hook = '';
 
+	/** Register the admin hooks. */
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'admin_post_sticky_order_save', array( __CLASS__, 'save' ) );
 	}
 
+	/** Add the submenu page under the configured parent menu. */
 	public static function menu() {
 		$labels = sticky_order_labels();
 
@@ -35,10 +46,12 @@ class Sticky_Order_Admin {
 	}
 
 	/**
-	 * @param string $hook 当前后台页的 hook suffix。
+	 * 只在本插件页入队样式与脚本。
+	 *
+	 * @param string $hook 当前后台页的 hook suffix.
 	 */
 	public static function assets( $hook ) {
-		if ( $hook !== self::$hook ) {
+		if ( self::$hook !== $hook ) {
 			return;
 		}
 
@@ -52,7 +65,9 @@ class Sticky_Order_Admin {
 		);
 	}
 
-	/** 保存顺序 */
+	/**
+	 * 保存队列顺序：校验权限与 nonce，净化提交值，写 option 后重定向（PRG）。
+	 */
 	public static function save() {
 		if ( ! current_user_can( sticky_order_capability() ) ) {
 			wp_die( esc_html__( 'You are not allowed to do that.', 'sticky-order' ), '', array( 'response' => 403 ) );
@@ -60,7 +75,8 @@ class Sticky_Order_Admin {
 
 		check_admin_referer( 'sticky_order_save' );
 
-		$raw = isset( $_POST['sticky_order'] ) ? (array) $_POST['sticky_order'] : array();
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- 值随后经 intval 净化为 ID。
+		$raw = isset( $_POST['sticky_order'] ) ? (array) wp_unslash( $_POST['sticky_order'] ) : array();
 
 		/* 只接受插件自己声明过的分组，避免任意 key 被写进 option */
 		$clean = array();
@@ -85,7 +101,14 @@ class Sticky_Order_Admin {
 		exit;
 	}
 
-	/** 一行：手柄 + 缩略图 + 标题 + 作者 + 日期 */
+	/**
+	 * 渲染一行：手柄 + 缩略图 + 标题 + 作者 + 日期。
+	 *
+	 * @param int     $id     文章 ID.
+	 * @param string  $group  所属队列 key.
+	 * @param WP_Post $post   文章对象.
+	 * @param array   $labels 界面文案.
+	 */
 	private static function item( $id, $group, $post, $labels ) {
 		$thumb  = get_the_post_thumbnail_url( $id, 'thumbnail' );
 		$edit   = get_edit_post_link( $id );
@@ -120,7 +143,7 @@ class Sticky_Order_Admin {
 		<?php
 	}
 
-	/** 页面 */
+	/** 渲染后台排序页面。 */
 	public static function render() {
 		if ( ! current_user_can( sticky_order_capability() ) ) {
 			wp_die( esc_html__( 'You are not allowed to do that.', 'sticky-order' ), '', array( 'response' => 403 ) );
@@ -151,10 +174,10 @@ class Sticky_Order_Admin {
 				<?php wp_nonce_field( 'sticky_order_save' ); ?>
 
 				<?php foreach ( $groups as $slug => $label ) : ?>
-				<?php
-				$slug = (string) $slug;
-				$ids  = isset( $queues[ $slug ] ) ? $queues[ $slug ] : array();
-				?>
+					<?php
+					$slug = (string) $slug;
+					$ids  = isset( $queues[ $slug ] ) ? $queues[ $slug ] : array();
+					?>
 					<div class="postbox sticky-order-lane">
 						<div class="postbox-header">
 							<h2 class="hndle"><?php echo esc_html( $label ); ?></h2>

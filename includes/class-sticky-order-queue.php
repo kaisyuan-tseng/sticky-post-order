@@ -9,15 +9,24 @@
  *   3. option 里没有的新置顶，按发布日期倒序追加到队伍末尾（不会插队）；
  *   4. option 里有、但已经取消置顶或转成草稿的，直接丢弃 —— 取消置顶即刻生效；
  *   5. 分组模式下，一篇文章只进一条队列：取它第一个匹配到分组 slug 的 term。
+ *
+ * @package StickyOrder
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Queue resolution and lookup.
+ */
 class Sticky_Order_Queue {
 
-	/** 单次请求内的结果缓存 */
+	/**
+	 * 单次请求内的结果缓存。
+	 *
+	 * @var array|null
+	 */
 	private static $cache = null;
 
 	/**
@@ -122,8 +131,8 @@ class Sticky_Order_Queue {
 	 * 某篇文章归属的队列 key；不属于任何队列时返回 null。
 	 * $groups 为空即单队列模式，全部归到 default。
 	 *
-	 * @param WP_Post              $post   文章。
-	 * @param array<string,string> $groups 分组清单（调用方传入，避免逐篇重复跑 filter）。
+	 * @param WP_Post              $post   文章.
+	 * @param array<string,string> $groups 分组清单（调用方传入，避免逐篇重复跑 filter）.
 	 * @return string|null
 	 */
 	private static function group_for( $post, array $groups ) {
@@ -168,16 +177,26 @@ class Sticky_Order_Queue {
 		return $orphans;
 	}
 
-	/** 某文章在其队列里的位置；不在队列里返回 null。 */
-	public static function rank_of( $post_id ) {
+	/**
+	 * 某文章在其队列里的位置；不在队列里返回 null。
+	 *
+	 * @param int $post_id 文章 ID.
+	 * @return int|null
+	 */
+	public static function position_of( $post_id ) {
 		$data = self::resolve();
 		$id   = (int) $post_id;
 
 		return isset( $data['ranks'][ $id ] ) ? (int) $data['ranks'][ $id ] : null;
 	}
 
-	/** 某文章所属的队列 key；不在队列里返回 null。 */
-	public static function group_of( $post_id ) {
+	/**
+	 * 某文章所属的队列 key；不在队列里返回 null。
+	 *
+	 * @param int $post_id 文章 ID.
+	 * @return string|null
+	 */
+	public static function queue_of( $post_id ) {
 		$data = self::resolve();
 		$id   = (int) $post_id;
 

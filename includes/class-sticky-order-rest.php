@@ -6,20 +6,27 @@
  * 未置顶（或不在队列里）为 null，前端据此回退到「按日期」。
  *
  * 字段：
- *   sticky_order_rank   队列内的位置，0 起；不在队列里为 null
- *   sticky_order_group  所属队列的 key（单队列模式下是 default）；不在队列里为 null
+ *   sticky_order_position  队列内的位置，0 起；不在队列里为 null
+ *   sticky_order_queue     所属队列的 key（单队列模式下是 default）；不在队列里为 null
+ *
+ * @package StickyOrder
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * REST field registration.
+ */
 class Sticky_Order_REST {
 
+	/** Register the REST field hook. */
 	public static function init() {
 		add_action( 'rest_api_init', array( __CLASS__, 'register' ) );
 	}
 
+	/** Register the two read-only post fields. */
 	public static function register() {
 		$post_types = sticky_order_post_types();
 		if ( ! $post_types ) {
@@ -27,14 +34,14 @@ class Sticky_Order_REST {
 		}
 
 		$fields = array(
-			'sticky_order_rank'  => array(
-				'method'      => 'rank_of',
-				'description' => 'Index within its sticky queue (0-based); null when the post is not queued.',
+			'sticky_order_position' => array(
+				'method'      => 'position_of',
+				'description' => __( 'Index within its sticky queue (0-based); null when the post is not queued.', 'sticky-order' ),
 				'type'        => array( 'integer', 'null' ),
 			),
-			'sticky_order_group' => array(
-				'method'      => 'group_of',
-				'description' => 'Key of the queue the post belongs to; null when the post is not queued.',
+			'sticky_order_queue'    => array(
+				'method'      => 'queue_of',
+				'description' => __( 'Key of the queue the post belongs to; null when the post is not queued.', 'sticky-order' ),
 				'type'        => array( 'string', 'null' ),
 			),
 		);

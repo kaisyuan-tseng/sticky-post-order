@@ -5,7 +5,7 @@
 		return;
 	}
 
-	var $ = window.jQuery;
+	const $ = window.jQuery;
 
 	$( function () {
 		if ( ! $.fn || ! $.fn.sortable ) {

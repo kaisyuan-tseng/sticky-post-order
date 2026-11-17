@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sticky Post Order 2.0.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: manual\n"
+
+msgid "Sticky Order"
+msgstr ""
+
+msgid "All sticky posts"
+msgstr ""
+
+msgid "This order only affects where the front end reads the sticky queue; the posts list, related posts and publish dates are unchanged. To add a post to the queue, check \"Sticky\" on its edit screen."
+msgstr ""
+
+msgid "No sticky posts in this group yet. Check \"Sticky\" on a post edit screen and it will appear here automatically."
+msgstr ""
+
+msgid "Drag the handle on the left to reorder; higher means earlier."
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Order saved."
+msgstr ""
+
+msgid "No featured image"
+msgstr ""
+
+msgid "These sticky posts do not belong to any group and will not appear in a queue:"
+msgstr ""
+
+msgid "Assign them a category that matches a group."
+msgstr ""
+
+msgid "You are not allowed to do that."
+msgstr ""
+
+msgid "Index within its sticky queue (0-based); null when the post is not queued."
+msgstr ""
+
+msgid "Key of the queue the post belongs to; null when the post is not queued."
+msgstr ""
